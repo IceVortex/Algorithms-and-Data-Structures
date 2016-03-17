@@ -1,10 +1,10 @@
 #include "rNode.h"
 
-template <class T>
+template <class elementType>
 class rLinkedList
 {
 private:
-	rNode<T> *start, *finish;
+	rNode<elementType> *start, *finish;
 public:
 	rLinkedList()
 	{
@@ -13,33 +13,24 @@ public:
 
 	rLinkedList(rLinkedList & copy)
 	{
-		rNode<T> *current;
-		rNode<T> *newElement;
+		rNode<elementType> *current;
+		rNode<elementType> *newElement;
+		int index = 0;
 
-		iterator = copy.start;
-		newElement = new rNode<T>();
-		newElement->element = current->element;
-
-		this->start = this->finish = newElement;
-
+		current = copy.start;
+		
 		while (current != nullptr)
 		{
+			this->Insert(current->element, index++);
 			current = current->next;
-
-			newElement = new rNode<T>();
-			newElement->element = current->element;
-
-			(this->finish)->next = newElement;
-			this->finish = newElement;
 		}
-
-		(this->finish)->next = nullptr;
+		
 	}
 
 	~rLinkedList()
 	{
-		rNode<T> *temp;
-		rNode<T> *current = this->start;
+		rNode<elementType> *temp;
+		rNode<elementType> *current = this->start;
 
 		while (current != nullptr)
 		{
@@ -49,11 +40,11 @@ public:
 		}
 	}
 
-	bool Insert(T elementToInsert, unsigned int index)
+	bool Insert(elementType elementToInsert, unsigned int index)
 	{
 		if (index == 0)
 		{
-			rNode<T> *newElement = new rNode<T>();
+			rNode<elementType> *newElement = new rNode<elementType>();
 
 			newElement->element = elementToInsert;
 			newElement->next = this->start;
@@ -68,8 +59,8 @@ public:
 		else
 		{
 
-			rNode<T> *previous = this->start;
-			rNode<T> *current = this->start;
+			rNode<elementType> *previous = this->start;
+			rNode<elementType> *current = this->start;
 
 			unsigned int currentIndex = 0;
 
@@ -83,7 +74,7 @@ public:
 			if (index - currentIndex > 1)
 				return false;
 			
-			rNode<T> *newElement = new rNode<T>();
+			rNode<elementType> *newElement = new rNode<elementType>();
 			newElement->element = elementToInsert;
 
 			previous->next = newElement;
@@ -100,7 +91,7 @@ public:
 	{
 		if (index == 0)
 		{
-			rNode<T> *temp = this->start;
+			rNode<elementType> *temp = this->start;
 
 			this->start = (this->start)->next;
 
@@ -110,9 +101,9 @@ public:
 		}
 		else
 		{
-			rNode<T> *previous = this->start;
-			rNode<T> *current = this->start;
-			rNode<T> *temp;
+			rNode<elementType> *previous = this->start;
+			rNode<elementType> *current = this->start;
+			rNode<elementType> *temp;
 
 			unsigned int currentIndex = 0;
 
@@ -136,7 +127,7 @@ public:
 		}
 	}
 
-	T LookUp(unsigned int index)
+	elementType LookUp(unsigned int index)
 	{
 		if (index == 0)
 		{
@@ -144,7 +135,7 @@ public:
 		}
 		else
 		{
-			rNode<T> *current = this->start;
+			rNode<elementType> *current = this->start;
 
 			unsigned int currentIndex = 0;
 
@@ -161,4 +152,3 @@ public:
 		}
 	}
 };
-

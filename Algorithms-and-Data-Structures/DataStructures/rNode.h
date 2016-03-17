@@ -1,9 +1,10 @@
 #pragma once
-template <class T>
+
+template <class elementType>
 class rNode
 {
 public:
 	rNode *next;
-	T element;
+	elementType element;
 };
 
