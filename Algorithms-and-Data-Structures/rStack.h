@@ -1,3 +1,5 @@
+#pragma once
+
 #include "rNode.h"
 
 template <class elementType>
@@ -17,7 +19,7 @@ public:
 	{
 		rStack<elementType> temp;
 
-		rNode<elementType> *current = copy->topElement;
+		rNode<elementType> *current = copy.topElement;
 
 		while (current != nullptr)
 		{
@@ -31,20 +33,13 @@ public:
 			temp.Pop();
 		}
 
-		this->count = copy->count;
+		this->count = copy.count;
 	}
 
 	~rStack()
 	{
-		rNode<elementType> *temp;
-		rNode<elementType> *current = this->topElement;
-
-		while (current != nullptr)
-		{
-			temp = current;
-			current = current->next;
-			delete(temp);
-		}
+		while (!(this->isEmpty()))
+			this->Pop();
 	}
 
 	void Push(elementType elementToInsert)
@@ -73,7 +68,7 @@ public:
 
 	void Pop()
 	{
-		if (this->count > 0)
+		if (!(this->isEmpty()))
 		{
 			rNode<elementType> *temp = this->topElement;
 			this->topElement = (this->topElement)->next;
@@ -87,5 +82,33 @@ public:
 	unsigned long long getCount()
 	{
 		return this->count;
+	}
+
+	rStack & operator = (rStack & copy)
+	{
+		rStack<elementType> temp;
+
+		rNode<elementType> *current = copy.topElement;
+
+		while (current != nullptr)
+		{
+			temp.Push(current->element);
+			current = current->next;
+		}
+
+		while (!(this->isEmpty()))
+		{
+			this->Pop();
+		}
+
+		while (!temp.isEmpty())
+		{
+			this->Push(temp.Top());
+			temp.Pop();
+		}
+
+		this->count = copy.count;
+
+		return *this;
 	}
 };
