@@ -2,11 +2,15 @@
 
 #include "rNode.h"
 
-template <class elementType>
+/*
+	Queue class which keeps track of the first and the last element
+	The functions available to manipulate the queue are the standard ones such as push, pop, is_empty and so on
+*/
+template <class element_type>
 class rQueue
 {
 private:
-	rNode<elementType> *front, *back;
+	rNode<element_type> *front, *back;
 	unsigned long long count;
 public:
 	rQueue()
@@ -18,7 +22,7 @@ public:
 	rQueue(rQueue & copy)
 	{
 
-		rNode<elementType> *current = copy.front;
+		rNode<element_type> *current = copy.front;
 
 		while (current != nullptr)
 		{
@@ -31,48 +35,48 @@ public:
 
 	~rQueue()
 	{
-		while (!(this->isEmpty()))
+		while (!(this->is_empty()))
 			this->Pop();
 	}
 
-	void Push(elementType elementToInsert)
+	void push(element_type element_to_insert)
 	{
-		rNode<elementType> *newElement = new rNode<elementType>();
+		rNode<element_type> *new_element = new rNode<element_type>();
 
-		newElement->element = elementToInsert;
-		newElement->next = nullptr;
+		new_element->element = element_to_insert;
+		new_element->next = nullptr;
 
-		if (this->isEmpty())
+		if (this->is_empty())
 		{
-			this->front = this->back = newElement;
+			this->front = this->back = new_element;
 		}
 		else
 		{
-			(this->back)->next = newElement;
-			this->back = newElement;
+			(this->back)->next = new_element;
+			this->back = new_element;
 		}
 
 		this->count++;
 	}
 
-	bool isEmpty()
+	bool is_empty()
 	{
-		if (this->front == nullptr)
+		if (this->front == NULL)
 			return true;
 		else
 			return false;
 	}
 
-	elementType & Front()
+	element_type & front()
 	{
 		return (this->front)->element;
 	}
 
-	void Pop()
+	void pop()
 	{
-		if (!(this->isEmpty()))
+		if (!(this->is_empty()))
 		{
-			rNode<elementType> *temp = this->front;
+			rNode<element_type> *temp = this->front;
 			this->front = (this->front)->next;
 
 			delete(temp);
@@ -81,14 +85,14 @@ public:
 		}
 	}
 
-	unsigned long long getCount()
+	unsigned long long get_count()
 	{
 		return this->count;
 	}
 
 	rQueue & operator = (rQueue & copy)
 	{
-		rNode<elementType> *current = copy.front;
+		rNode<element_type> *current = copy.front;
 		
 		while (!(this->isEmpty()))
 			this->Pop();

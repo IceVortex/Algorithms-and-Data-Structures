@@ -2,35 +2,35 @@
 
 #include "rNode.h"
 
-template <class elementType>
+template <class element_type>
 class rStack
 {
 private:
-	rNode<elementType> *topElement;
+	rNode<element_type> *top_element;
 	unsigned long long count;
 public:
 	rStack()
 	{
-		this->topElement = nullptr;
+		this->top_element = NULL;
 		this->count = 0;
 	}
 
 	rStack(rStack & copy)
 	{
-		rStack<elementType> temp;
+		rStack<element_type> temp;
 
-		rNode<elementType> *current = copy.topElement;
+		rNode<element_type> *current = copy.top_element;
 
-		while (current != nullptr)
+		while (current != NULL)
 		{
-			temp.Push(current->element);
+			temp.push(current->element);
 			current = current->next;
 		}
 
-		while (!temp.isEmpty())
+		while (!temp.is_empty())
 		{
-			this->Push(temp.Top());
-			temp.Pop();
+			this->push(temp.Top());
+			temp.pop();
 		}
 
 		this->count = copy.count;
@@ -38,40 +38,40 @@ public:
 
 	~rStack()
 	{
-		while (!(this->isEmpty()))
-			this->Pop();
+		while (!(this->is_empty()))
+			this->pop();
 	}
 
-	void Push(elementType elementToInsert)
+	void push(element_type element_to_insert)
 	{
-		rNode<elementType> *newElement = new rNode<elementType>();
+		rNode<element_type> *new_element = new rNode<element_type>();
 		
-		newElement->element = elementToInsert;
-		newElement->next = this->topElement;
+		new_element->element = element_to_insert;
+		new_element->next = this->top_element;
 
-		this->topElement = newElement;
+		this->top_element = new_element;
 		this->count++;
 	}
 
-	bool isEmpty()
+	bool is_empty()
 	{
-		if (this->topElement == nullptr)
+		if (this->top_element == NULL)
 			return true;
 		else
 			return false;
 	}
 
-	elementType & Top()
+	element_type & Top()
 	{
-		return (this->topElement)->element;
+		return (this->top_element)->element;
 	}
 
-	void Pop()
+	void pop()
 	{
-		if (!(this->isEmpty()))
+		if (!(this->is_empty()))
 		{
-			rNode<elementType> *temp = this->topElement;
-			this->topElement = (this->topElement)->next;
+			rNode<element_type> *temp = this->top_element;
+			this->top_element = (this->top_element)->next;
 
 			delete(temp);
 
@@ -79,32 +79,32 @@ public:
 		}
 	}
 
-	unsigned long long getCount()
+	unsigned long long get_count()
 	{
 		return this->count;
 	}
 
 	rStack & operator = (rStack & copy)
 	{
-		rStack<elementType> temp;
+		rStack<element_type> temp;
 
-		rNode<elementType> *current = copy.topElement;
+		rNode<element_type> *current = copy.top_element;
 
-		while (current != nullptr)
+		while (current != NULL)
 		{
-			temp.Push(current->element);
+			temp.push(current->element);
 			current = current->next;
 		}
 
-		while (!(this->isEmpty()))
+		while (!(this->is_empty()))
 		{
-			this->Pop();
+			this->pop();
 		}
 
-		while (!temp.isEmpty())
+		while (!temp.is_empty())
 		{
-			this->Push(temp.Top());
-			temp.Pop();
+			this->push(temp.Top());
+			temp.pop();
 		}
 
 		this->count = copy.count;
